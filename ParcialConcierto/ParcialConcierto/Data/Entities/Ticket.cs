@@ -22,7 +22,6 @@ namespace ParcialConcierto.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
 
-
         public ICollection<Entrance> Entrances { get; set; }
 
 

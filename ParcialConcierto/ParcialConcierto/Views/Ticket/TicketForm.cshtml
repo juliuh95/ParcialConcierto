@@ -4,8 +4,10 @@
 }
 
 <h1>Ingresa tus datos</h1>
-<form asp-action="GuardarTicket">
+<form asp-action="TicketForm" enctype="multipart/form-data">
+     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Entrances" />
     <div class="form-group">
         <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />

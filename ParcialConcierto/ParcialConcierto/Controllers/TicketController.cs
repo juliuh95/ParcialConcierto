@@ -56,9 +56,49 @@ namespace ParcialConcierto.Controllers
             {
                 Entrances = await _combosHelper.GetComboEntrancesAsync(ticket.Id),
             };
-            Debug.WriteLine("########" );
+            Debug.WriteLine("########");
+            return View(ticketViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TicketForm(TicketViewModel ticketViewModel)
+        {
+            if (ModelState.IsValid) 
+            {
+                try
+                {
+                    Ticket ticket = new()
+                    {
+                        WasUsed = true,
+                        Id = ticketViewModel.Id,
+                        Document = ticketViewModel.Document,
+                        Name = ticketViewModel.Name,
+                        Date = DateTime.Now,
+
+                    };
+                    _context.Add(ticket);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(IndexTicket));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
             return View(ticketViewModel);
         }
 
     }
 }
+
