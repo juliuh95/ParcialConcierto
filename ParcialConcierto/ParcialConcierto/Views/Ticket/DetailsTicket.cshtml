@@ -1,0 +1,40 @@
+﻿@model ParcialConcierto.Data.Entities.Ticket
+@{
+    ViewData["Title"] = "DetailsTicket";
+}
+
+<h4>Ticket</h4>
+<hr />
+<dl class="row">
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Id)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Id)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Document)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Document)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Entrance)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Entrance)
+    </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Date)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Date)
+    </dd>
+</dl>
+

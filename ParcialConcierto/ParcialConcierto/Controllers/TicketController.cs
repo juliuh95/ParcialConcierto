@@ -35,12 +35,13 @@ namespace ParcialConcierto.Controllers
 
             if (ticket == null)
             {
+                Debug.WriteLine("######## Entro al no encontro tickert");
                 return NotFound();
             }
             if (ticket.WasUsed)
             {
-                Debug.WriteLine("######## Entro al else o sea que no esta usado");
-                //return RedirectToAction(nameof(DetailsTicket), ticket);
+                Debug.WriteLine("######## Entro al details");
+                return RedirectToAction(nameof(DetailsTicket), ticket);
             }
             else {
                 Debug.WriteLine("######## Entro al else o sea que no esta usado");
@@ -72,8 +73,7 @@ namespace ParcialConcierto.Controllers
 
         [HttpPost]
         public async Task<IActionResult> TicketForm(int id, TicketViewModel ticketViewModel)
-        {
-            
+        { 
             if (ModelState.IsValid) 
             {
                 try
@@ -95,7 +95,7 @@ namespace ParcialConcierto.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                        ModelState.AddModelError(string.Empty, "");
                     }
                     else
                     {
@@ -108,6 +108,23 @@ namespace ParcialConcierto.Controllers
                 }
             }
             return View(ticketViewModel);
+        }
+
+        public async Task<IActionResult> DetailsTicket(Ticket ticket1) 
+        {
+            if (ticket1.Id == null)
+            {
+                return NotFound();
+            }
+            Ticket ticket = await _context.Tickets
+                .Include(t => t.Entrance)
+                .FirstOrDefaultAsync(t => t.Id == ticket1.Id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            return View(ticket);
         }
 
     }
