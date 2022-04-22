@@ -19,7 +19,6 @@ namespace ParcialConcierto.Helpers
             Console.WriteLine("Llegue");
             Debug.WriteLine("Lleg");
             List<SelectListItem> list = await _context.Entrances
-                .Where(e => e.Ticket.Id == id)
                 .Select(c => new SelectListItem
             {
                 Text = c.Description,

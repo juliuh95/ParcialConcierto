@@ -31,7 +31,6 @@ namespace ParcialConcierto.Controllers
                 return NotFound();
             }
             Ticket ticket = await _context.Tickets
-                .Include(t => t.Entrances)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             if (ticket == null)
@@ -40,6 +39,8 @@ namespace ParcialConcierto.Controllers
             }
             if (ticket.WasUsed)
             {
+                Debug.WriteLine("######## Entro al else o sea que no esta usado");
+                //return RedirectToAction(nameof(DetailsTicket), ticket);
             }
             else {
                 Debug.WriteLine("######## Entro al else o sea que no esta usado");
@@ -49,34 +50,44 @@ namespace ParcialConcierto.Controllers
             return View(ticket);
 
         }
-        public async Task<IActionResult> TicketForm(int id, Ticket ticket)
+        public async Task<IActionResult> TicketForm(int id)
         {
-            Debug.WriteLine("######## el id en ticket form es " + ticket.Id);
+            Ticket ticket = await _context.Tickets
+                .Include(t => t.Entrance)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
             TicketViewModel ticketViewModel = new()
             {
+                Document = ticket.Document,
+                Name = ticket.Name,
                 Entrances = await _combosHelper.GetComboEntrancesAsync(ticket.Id),
+
             };
-            Debug.WriteLine("########");
             return View(ticketViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> TicketForm(TicketViewModel ticketViewModel)
+        public async Task<IActionResult> TicketForm(int id, TicketViewModel ticketViewModel)
         {
+            
             if (ModelState.IsValid) 
             {
                 try
                 {
                     Ticket ticket = new()
                     {
-                        WasUsed = true,
                         Id = ticketViewModel.Id,
+                        WasUsed = true,
                         Document = ticketViewModel.Document,
                         Name = ticketViewModel.Name,
                         Date = DateTime.Now,
-
+                        Entrance = await _context.Entrances.FindAsync(ticketViewModel.EntranceId),
                     };
-                    _context.Add(ticket);
+                    _context.Update(ticket);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(IndexTicket));
                 }

@@ -7,7 +7,6 @@
 <form asp-action="TicketForm" enctype="multipart/form-data">
      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="Entrances" />
     <div class="form-group">
         <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
@@ -27,3 +26,31 @@
         <input type="submit"  value="Guardar ticket" class="btn btn-outline-primary" />
     </div>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#CountryId").change(function () {
+                debugger;
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetStates")',
+                    dataType: 'json',
+                    data: { countryId: $("#CountryId").val() },
+                    success: function (states) {
+                        $.each(states, function (i, state) {
+                            $("#StateId").append('<option value="'
+                                + state.id + '">'
+                                + state.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}

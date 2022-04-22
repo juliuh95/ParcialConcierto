@@ -23,6 +23,6 @@ namespace ParcialConcierto.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int EntranceId { get; set; }
 
-        public IEnumerable<SelectListItem> Entrances { get; set; }
+        public IEnumerable<SelectListItem>? Entrances { get; set; }
     }
 }

@@ -15,11 +15,11 @@ namespace ParcialConcierto.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckTicketsAsync();
-            //await CheckEntrancesAsync();
+            await CheckEntrancesAsync();
 
         }
 
-        /*private async Task CheckEntrancesAsync()
+        private async Task CheckEntrancesAsync()
         {
             if (!_context.Entrances.Any())
             {
@@ -29,7 +29,7 @@ namespace ParcialConcierto.Data
                 _context.Entrances.Add(new Entrance { Description ="Occidental" });
                 await _context.SaveChangesAsync();
             }
-        }*/
+        }
 
         private async Task CheckTicketsAsync()
         {
@@ -38,16 +38,13 @@ namespace ParcialConcierto.Data
             {
                 for (int i = 0; i < 5000; i++)
                 {
-                    _context.Tickets.Add(new Ticket { 
-                        WasUsed = false, 
-                        Document = "", 
+                    _context.Tickets.Add(new Ticket
+                    {
+                        WasUsed = false,
+                        Document = "",
                         Name = "",
-                        Entrances = new List<Entrance>() { 
-                            new Entrance() { Description ="Norte" },
-                            new Entrance() { Description ="Sur" },
-                            new Entrance() { Description ="Oriental" },
-                            new Entrance() { Description ="Occidental" },}
-                    });
+                        Entrance = null
+                    }); 
                 }
                 
                 await _context.SaveChangesAsync();
