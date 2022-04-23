@@ -19,7 +19,7 @@ namespace ParcialConcierto.Models
         public string Name { get; set; }
 
         [Display(Name = "Entrada")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un país.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una Entrada.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int EntranceId { get; set; }
 

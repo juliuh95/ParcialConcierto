@@ -35,9 +35,13 @@ namespace ParcialConcierto.Controllers
 
             if (ticket == null)
             {
-                Debug.WriteLine("######## Entro al no encontro tickert");
-                return NotFound();
+                Debug.WriteLine("######## Entro al no encontro ticket");
+
+                ModelState.AddModelError(string.Empty, "");
+
+
             }
+            
             if (ticket.WasUsed)
             {
                 Debug.WriteLine("######## Entro al details");
@@ -51,6 +55,8 @@ namespace ParcialConcierto.Controllers
             return View(ticket);
 
         }
+
+
         public async Task<IActionResult> TicketForm(int id)
         {
             Ticket ticket = await _context.Tickets
