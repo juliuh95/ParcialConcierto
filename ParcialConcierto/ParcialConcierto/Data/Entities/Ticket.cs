@@ -6,6 +6,7 @@ namespace ParcialConcierto.Data.Entities
     public class Ticket
     {
         [Display(Name = "Id del Ticket")]
+       
         public int Id { get; set; }
 
         [Display(Name = "Boleto Usado")]        

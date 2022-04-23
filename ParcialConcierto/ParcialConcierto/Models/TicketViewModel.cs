@@ -6,6 +6,8 @@ namespace ParcialConcierto.Models
     public class TicketViewModel
     {
         [Display(Name = "Id del Ticket")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+ 
         public int Id { get; set; }
 
         [Display(Name = "Documento")]

@@ -32,13 +32,12 @@ namespace ParcialConcierto.Controllers
             }
             Ticket ticket = await _context.Tickets
                 .FirstOrDefaultAsync(t => t.Id == id);
-
+            
+            
             if (ticket == null)
             {
-                Debug.WriteLine("######## Entro al no encontro ticket");
-
-                ModelState.AddModelError(string.Empty, "");
-
+                Debug.WriteLine("######## Entro al no encontro");
+                return RedirectToAction(nameof(TicketUsed), ticket);
 
             }
             
@@ -56,6 +55,10 @@ namespace ParcialConcierto.Controllers
 
         }
 
+        public async Task<IActionResult> TicketUsed(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<IActionResult> TicketForm(int id)
         {
@@ -95,7 +98,7 @@ namespace ParcialConcierto.Controllers
                     };
                     _context.Update(ticket);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(IndexTicket));
+                    return RedirectToAction(nameof(DetailsTicket), new { Id = ticketViewModel.Id });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
