@@ -25,7 +25,7 @@ namespace ParcialConcierto.Controllers
 
         public async Task<IActionResult> SearchTicket(int? id)
         {
-            Debug.WriteLine("########" + id);
+            Debug.WriteLine("######## el id es" + id);
             if (id == null)
             {
                 return NotFound();
@@ -37,7 +37,7 @@ namespace ParcialConcierto.Controllers
             if (ticket == null)
             {
                 Debug.WriteLine("######## Entro al no encontro");
-                return RedirectToAction(nameof(TicketUsed), ticket);
+                return RedirectToAction(nameof(TicketNotExist), ticket);
 
             }
             
@@ -55,10 +55,7 @@ namespace ParcialConcierto.Controllers
 
         }
 
-        public async Task<IActionResult> TicketUsed(int id)
-        {
-            throw new NotImplementedException();
-        }
+  
 
         public async Task<IActionResult> TicketForm(int id)
         {
@@ -134,6 +131,11 @@ namespace ParcialConcierto.Controllers
                 return NotFound();
             }
             return View(ticket);
+        }
+
+        public async Task<IActionResult> TicketNotExist(int id)
+        {
+            return View();
         }
 
     }

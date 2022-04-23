@@ -6,11 +6,11 @@ namespace ParcialConcierto.Data.Entities
     public class Ticket
     {
         [Display(Name = "Id del Ticket")]
-       
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int Id { get; set; }
 
-        [Display(Name = "Boleto Usado")]        
-       
+        [Display(Name = "Boleto Usado")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public bool WasUsed { get; set; }
 
         [Display(Name = "Documento")]
